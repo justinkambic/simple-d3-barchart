@@ -1,7 +1,26 @@
 .chart {
-    border: 1px black solid;
+  border: 1px black solid;
 }
 
 .chart rect {
-    fill: steelblue;
+  fill: steelblue;
+}
+
+.chart rect:hover{
+  fill: #0A8FFC;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  display: block;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: #FFB20B;
+  border: 1px;
+  border-style: solid;
+  box-shadow: 2px 2px 1px #808080;
+  border-color: #565A5F;
+  border-radius: 2px;
+  pointer-events: none;
 }
