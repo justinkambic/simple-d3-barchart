@@ -17,13 +17,15 @@ const xScale = d3.scaleBand()
 
 const yScale = d3.scaleLinear()
   .domain([0, d3.max(data)])
-  .range([height, 0]);
+  .range([0, height]);
+
+const yAxisScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
 
 const xAxis = d3.axisBottom()
   .scale(xScale);
 
 const yAxis = d3.axisLeft()
-  .scale(yScale)
+  .scale(yAxisScale)
   .ticks(data.length, "s");
 
 const svg = d3.select(".chart")
@@ -49,9 +51,8 @@ svg.selectAll("rect")
   .enter()
   .append("rect")
     .attr("x", (d, i) => xScale(i))
-    .attr("y", d => yScale(d))
+    .attr("y", d => height)
     .attr("width", xScale.bandwidth())
-    .attr("height", d => height - yScale(d) + "px")
     .attr("transform", `translate(${margin.left},${margin.top})`)
     .on("mouseover", (d, i) => {
       div.transition()
@@ -65,4 +66,9 @@ svg.selectAll("rect")
       div.transition()
         .duration(200)
         .style("opacity", 0);
-    });
+    })
+    .transition()
+    .duration(250)
+    .ease(d3.easeLinear)
+    .attr("y", d => height - yScale(d) + "px")
+    .attr("height", d => yScale(d));
